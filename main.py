@@ -5,6 +5,8 @@ import threading
 import keyboard
 import soundfile as sf
 
+STOP_KEY = "|"
+
 class SoundRecorder:
     def __init__(self):
         self.recording = False
@@ -23,9 +25,9 @@ class SoundRecorder:
                 self.frames.append(indata.copy())
 
         with sd.InputStream(callback=callback):
-            print("Recording... Press 'q' to stop recording.")
+            print(f"Recording... Press '{STOP_KEY}' to stop recording.")
             while self.recording:
-                if keyboard.is_pressed("q"):
+                if keyboard.is_pressed(STOP_KEY):
                     self.stop_recording()
 
     def stop_recording(self):
@@ -43,5 +45,5 @@ if __name__ == "__main__":
     recorder = SoundRecorder()
     recorder.start_recording()
     while True:
-        if keyboard.is_pressed("q"):
+        if keyboard.is_pressed(STOP_KEY):
             break
